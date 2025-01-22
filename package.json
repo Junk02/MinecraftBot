@@ -1,0 +1,19 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "mineflayer": "^4.25.0",
+    "mineflayer-autoclicker": "^1.2.0",
+    "mineflayer-pathfinder": "^2.4.5",
+    "prismarine-viewer": "^1.29.0"
+  },
+  "description": ""
+}
