@@ -114,19 +114,36 @@ bot.on("chat", (username, message) => {
             case "inv_drop":
                 dropAllItems();
                 break;
-            case "drop": {
-                let ind = -1;
-                if (message_parts.length > 1) {
-                    ind = +message_parts[1];
-                    if (isNaN(ind)) {
-                        bot.chat("Неверный индекс");
-                        return;
+            case "drop":
+            {
+                let indexes = [];
+                for (let part of message_parts) {
+                    bot.chat(part.toString());
+                    if (!isNaN(+part)){
+                        indexes.push(+part);
                     }
                 }
-                dropItem(ind);
+                if (indexes.length === 0) {
+                    bot.chat("Неверный(е) индекс(а)");
+                    return;
+                }
+
+                dropItems(indexes);
                 break;
+
+                // let ind = -1;
+                // if (message_parts.length > 1) {
+                //     ind = +message_parts[1];
+                //     if (isNaN(ind)) {
+                //         bot.chat("Неверный индекс");
+                //         return;
+                //     }
+                // }
+                // dropItem(ind);
+                // break;
             }
-            case "hand": {
+            case "hand":
+            {
                 if (message_parts.length === 1) {
                     bot.chat("Недостаток аргументов для команды #hand (смотрите #help для справки)");
                     return;
@@ -291,13 +308,23 @@ async function dropAllItems(){
     }
 }
 
-async function dropItem(ind){
-    if (bot.inventory.items()[ind] === undefined){
-        bot.chat("В руке нет предмета");
-        return;
+async function dropItems(indexes){
+    // if (bot.inventory.items()[ind] === undefined){
+    //     bot.chat("В руке нет предмета");
+    //     return;
+    // }
+
+    let items = [];
+    for (let ind of indexes){
+        if (bot.inventory.items()[ind] !== undefined) {
+            items.push(bot.inventory.items()[ind]);
+        }
     }
 
-    await bot.tossStack(bot.inventory.items()[ind]);
+    for (let item of items){
+        await bot.tossStack(item);
+    }
+    //await bot.tossStack(bot.inventory.items()[ind]);
 }
 
 async function getItemToHand(ind){
@@ -325,7 +352,7 @@ function seeHelp(){
         "#go (параметр_x) (параметр_y) (параметр_z) — пойти на указанные координаты\n" +
         "#a или #j — случайный анекдот\n" +
         "#inv_drop — выбросить все предметы из инвентаря\n" +
-        "#drop !(необязательный параметр_ind) — выбросить предмет из руки или по индексу\n" +
+        "#drop !(необязательные параметры_ind через пробел) — выбросить предмет из руки или по индексу\n" +
         "#hand (параметр_ind) — взять предмет по ind в руку\n"
     )
 }
