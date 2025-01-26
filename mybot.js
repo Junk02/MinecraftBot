@@ -3,6 +3,8 @@ const mineflayer = require("mineflayer");
 const fs = require("fs");
 const {pathfinder, Movements, goals: {GoalNear, GoalBlock, GoalFollow}} = require('mineflayer-pathfinder');
 const item = require("mineflayer/lib/painting");
+const {autototem} = require("mineflayer-auto-totem");
+const armorManager = require("mineflayer-armor-manager");
 //const colors = require('colors');
 
 let settings;
@@ -14,7 +16,7 @@ try{
     settings = JSON.parse(rawData);
     log("settings.json was correctly loaded", "success");
 }
-catch(ex){
+catch(ex){vvvvvvv
     log(`Error in reading settings.json ${ex}`, "error");
 }
 
@@ -34,11 +36,16 @@ const bot = mineflayer.createBot({
     username: settings.bot_name,
 });
 
+
+
+
 //const mcData = require('minecraft-data')(bot.version)
 
 bot.once("spawn", function(){
     bot.loadPlugin(pathfinder); // добавление плагина поиска путей
     //bot.loadPlugin(require("mineflayer-autoclicker")); // добавление плагина автокликера
+    bot.loadPlugin(autototem); // добавление плагина на экипировку тотема
+    bot.loadPlugin(armorManager); // добавление плагина на автоэкипировку
 
     bot.chat(`Привет мир!\nCoordinates: ${bot.entity.position}`);
 
@@ -172,6 +179,10 @@ bot.on("sleep", () => {
 
 bot.on("wake", () => {
     bot.chat("Доброе утро!");
+});
+
+bot.on("physicsTick", async() => {
+    bot.autototem.equip();
 });
 
 bot.on("health", () => {

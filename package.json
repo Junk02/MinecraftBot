@@ -11,6 +11,8 @@
   "dependencies": {
     "colors": "^1.4.0",
     "mineflayer": "^4.25.0",
+    "mineflayer-armor-manager": "^2.0.1",
+    "mineflayer-auto-totem": "^1.3.0",
     "mineflayer-autoclicker": "^1.2.0",
     "mineflayer-pathfinder": "^2.4.5",
     "prismarine-viewer": "^1.29.0"

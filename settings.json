@@ -1,7 +1,7 @@
 {
   "bot_name": "botChychmek",
   "message_wait_time": 1000,
-  "ip_address": "tfc.su",
-  "port": "21024",
+  "ip_address": "127.0.0.1",
+  "port": "50330",
   "version": "1.20.4"
 }
